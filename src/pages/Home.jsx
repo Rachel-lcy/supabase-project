@@ -29,7 +29,8 @@ export default function Home(){
 
     const {data, error} = await supabase
     .from('todos')
-    .insert([{task, is_complete: false}]);
+    .insert([{task, is_complete: false}])
+    .select();
     
     if(error){
       console.error('error:', error)
@@ -41,10 +42,10 @@ export default function Home(){
 
   return(
     <div>
-      <h1>To Do Lists</h1>
+      <h1 className="text-6xl font-semibold mb-4">To Do Lists</h1>
       <ul>
         {todos.map((todo,index)=>(
-          <li key={index}>
+          <li key={index} className="no-underline">
             {todo.task} - {todo.is_complete ? 'finished' : 'unfinished'}
           </li>
         ))}
@@ -54,8 +55,9 @@ export default function Home(){
       placeholder="Inset the task"
       value={task}
       onChange = {(e) => setTask(e.target.value)}
+      className="border-2 border-yellow-300 py-3 mt-4"
       />
-      <button onClick={addTask}> Add the Tasks</button>
+      <button onClick={addTask} className="py-3 px-3 mt-4 bg-amber-300 rounded-xl ml-3 text-white font-semibold hover:bg-yellow-600 "> Add the Tasks</button>
 
     </div>
   )
